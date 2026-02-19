@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cultivation Calculator Pro</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      background: #020617;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: #020617;
+      border: 1px solid #334155;
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .result {
+      font-size: 18px;
+      margin-top: 15px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      background: #3b82f6;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2563eb;
+    }
+
+    @media(max-width: 600px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Cultivation Calculator Pro</h1>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Inputs</h2>
+
+        <label>Power</label>
+        <input type="number" id="power" value="1000">
+
+        <label>Clear Time (sec)</label>
+        <input type="number" id="time" value="30">
+
+        <label>Multiplier</label>
+        <input type="number" id="multiplier" value="1" step="0.1">
+
+        <button onclick="resetValues()">Reset</button>
+      </div>
+
+      <div class="card">
+        <h2>Results</h2>
+        <div class="result">EXP Gain: <span id="exp">0</span></div>
+        <div class="result">Gold Gain: <span id="gold">0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calculate() {
+      let power = Number(document.getElementById('power').value);
+      let time = Number(document.getElementById('time').value);
+      let multiplier = Number(document.getElementById('multiplier').value);
+
+      let exp = Math.floor(power * multiplier * (60 / time));
+      let gold = Math.floor(exp * 0.6);
+
+      document.getElementById('exp').innerText = exp;
+      document.getElementById('gold').innerText = gold;
+    }
+
+    function resetValues() {
+      document.getElementById('power').value = 1000;
+      document.getElementById('time').value = 30;
+      document.getElementById('multiplier').value = 1;
+      calculate();
+    }
+
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('input', calculate);
+    });
+
+    calculate();
+  </script>
+</body>
+</html>
